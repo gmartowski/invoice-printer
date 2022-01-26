@@ -1,9 +1,23 @@
+import styled from "styled-components";
 import { Grid } from "@mui/material";
 
-const Heading = () => (
-  <Grid>
-    <h1>FV</h1>
+interface IHeading {
+  title: string,
+  content: string,
+}
+
+const Heading = (props: IHeading) => (
+  <Grid container>
+    <Grid item xs={12}>
+      <h1>{props.title} {props.content}</h1>
+    </Grid>
   </Grid>
 )
 
-export default Heading;
+const SHeading = styled(Heading)`
+  background-color: grey;
+  border: 1px solid black;
+`;
+
+
+export default SHeading;

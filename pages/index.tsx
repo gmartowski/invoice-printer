@@ -4,25 +4,23 @@ import { Grid } from "@mui/material";
 import Form from "./Form/Form";
 import Preview from "./Preview/Preview";
 import Heading from "../components/Heading/Heading";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { Provider } from "react-redux";
+import { store } from "../store/store";
 
-const Home: NextPage = () => {
-  const data = useSelector((state: RootState) => state.invoice);
-  return (
-    <Grid container spacing={2}>
+const Home: NextPage = () => (
+  <Provider store={store}>
+    <Grid container spacing={4}>
       <Grid item xs={12}>
         <Heading/>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         <Form/>
       </Grid>
-      <Grid item xs={6}>
-        {JSON.stringify(data)}
+      <Grid item xs={8}>
         <Preview/>
       </Grid>
     </Grid>
-  )
-}
+  </Provider>
+)
 
 export default Home

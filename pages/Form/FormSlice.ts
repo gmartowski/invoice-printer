@@ -7,7 +7,7 @@ export const formSlice = createSlice({
   initialState: formInitialState,
   reducers: {
     createInvoice: (state: FormState, action: PayloadAction<FormState>) => {
-      state = { ...state, ...action.payload }
+      return { ...state, ...action.payload }
     }
   }
 })

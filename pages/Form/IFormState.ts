@@ -1,14 +1,26 @@
 export interface FormState {
   invoiceNumber: string;
-  vendor: string;
+  vendorName: string;
+  vendorId: number;
   vendorNIP: number;
   vendorAddress: string;
-  purchaser: string;
+  vendorPostal: string;
+  vendorCity: string;
+  vendorAccount: number;
+  vendorPhoneNumber: number;
+  vendorEmail: string;
+  purchaserName: string;
+  purchaserId: number;
   purchaserNIP: number;
   purchaserAddress: string;
-  dateOfIssue: string;
-  dateOfCreation: string;
-  paymentDeadline: string;
+  purchaserPostal: string;
+  purchaserCity: string;
+  purchaserAccount: number;
+  purchaserPhoneNumber: number;
+  purchaserEmail: string;
+  dateOfIssue: string | null;
+  dateOfCreation: string | null;
+  paymentDeadline: string | null;
   productName: string;
   productAmount: number;
   nettAmount: number; // cena netto
@@ -19,4 +31,5 @@ export interface FormState {
   toPay: number; // razem do zapłaty
   toBePayed: number; // pozostałio do zapłaty
   payed: number; // zapłacono
+
 }
