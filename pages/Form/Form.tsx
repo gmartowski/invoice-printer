@@ -16,15 +16,22 @@ import AdapterDateFns from '@mui/lab/AdapterMoment';
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import { IVendorData } from "../../components/CompanyDetails/IVendorData";
 
+interface IInvoiceQuotas {
+  nettQuota: number,
+  vatInPercents: 0 | 0.05 | 0.08 | 0.23,
+  vatQuota: number,
+  grossQuota: number
+}
+
 export default function Form() {
   const reduxState = useSelector((state: RootState) => state.invoice);
   const dispatch = useDispatch();
 
   const [state, setState] = useState(formInitialState);
 
-  const handleChanges = (value: string, id: string) => {
-    setState({ ...state, [id]: value })
-    dispatch(createInvoice({ ...reduxState, [id]: value }))
+  const handleChanges = (value: string | number, id: string) => {
+    setState({ ...state, [id]: value });
+    dispatch(createInvoice({ ...reduxState, [id]: value }));
   }
 
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
@@ -47,7 +54,7 @@ export default function Form() {
     }))
   }
 
-  const handlerSeller = (value: number) => {
+  const handleSeller = (value: number): void => {
     const { nip, name, account, address, postal, city, email, phone } = getVendor(value);
     setState({ ...state, vendorId: value })
     dispatch(createInvoice({
@@ -63,22 +70,27 @@ export default function Form() {
     }))
   }
 
+  const handleVat = (value: number): void => {
+    handleChanges(value, "vatPercentage");
+  }
+
   // @ts-ignore
   const getVendor = (id: number): IVendorData => vendors.find(item => item.id === id);
 
   return (
     <form>
+
       <Grid container spacing={2}>
 
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <SelectData id="seller"
                       labelId="seller-label"
                       label="Sprzedający" list={vendors}
-                      handleChange={handlerSeller}
+                      handleChange={handleSeller}
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <SelectData id="purchaser"
                       labelId="purchaser-label"
                       label="Nabywca"
@@ -86,8 +98,28 @@ export default function Form() {
                       handleChange={handlePurchaser}
           />
         </Grid>
+      </Grid>
 
-        <Grid item xs={2}>
+      <Grid container spacing={2} style={{ marginTop: "10px" }}>
+        <Grid item xs={8}>
+
+          <Input
+            error={errors['productName'] && true}
+            id="productName"
+            label="Nazwa produktu"
+            helperText="Nazwa produktu"
+            variant={"outlined"}
+            register={{
+              ...register("productName", { required: true })
+            }}
+            handleValue={handleChanges}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} style={{ marginTop: "10px" }}>
+
+        <Grid item xs={4}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Data zakupu"
@@ -100,7 +132,7 @@ export default function Form() {
           </LocalizationProvider>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Data wystawienia"
@@ -116,7 +148,7 @@ export default function Form() {
           </LocalizationProvider>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Termin płatności"
@@ -131,19 +163,21 @@ export default function Form() {
             />
           </LocalizationProvider>
         </Grid>
+      </Grid>
 
-        <Grid item xs={6}>
+      <Grid container spacing={2} style={{ marginTop: "10px" }}>
 
-          <Input
-            error={errors['productName'] && true}
-            id="productName"
-            label="Nazwa produktu"
-            helperText="Nazwa produktu"
-            variant={"outlined"}
-            register={{
-              ...register("productName", { required: true })
-            }}
-            handleValue={handleChanges}
+        <Grid item xs={4}>
+          <SelectData id="vat"
+                      labelId="vat-percentage"
+                      label="Stawka VAT"
+                      list={[
+                        { id: 0, name: "0%" },
+                        { id: 0.05, name: "5%" },
+                        { id: 0.08, name: "8%" },
+                        { id: 0.23, name: "23%" }
+                      ]}
+                      handleChange={handleVat}
           />
         </Grid>
       </Grid>

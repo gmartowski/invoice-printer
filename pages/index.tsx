@@ -1,11 +1,15 @@
 import React from 'react';
 import { NextPage } from "next";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import Form from "./Form/Form";
 import Preview from "./Preview/Preview";
 import Heading from "../components/Heading/Heading";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
+import Pdf from "react-to-pdf";
+import moment from "moment/moment";
+
+const ref = React.createRef();
 
 const Home: NextPage = () => (
   <Provider store={store}>
@@ -17,7 +21,14 @@ const Home: NextPage = () => (
         <Form/>
       </Grid>
       <Grid item xs={8}>
-        <Preview/>
+        <Preview reff={ref}/>
+        <Pdf targetRef={ref}
+             filename={`gmartowski-${moment().format('MMMM').toLowerCase()}-${moment().format('YYYY')}`}>
+          {({ toPdf }) => (
+            <Button variant="outlined" onClick={toPdf}>Generate Pdf</Button>
+          )}
+        </Pdf>
+        <div>{}</div>
       </Grid>
     </Grid>
   </Provider>

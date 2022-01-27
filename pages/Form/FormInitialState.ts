@@ -2,10 +2,10 @@ import { FormState } from "./IFormState";
 
 export const formInitialState: FormState = {
   invoiceNumber: '',
-  vendorId: '',
+  vendorId: 0,
   vendorNIP: 0,
   vendorAddress: '',
-  purchaserId: '',
+  purchaserId: 0,
   purchaserNIP: 0,
   purchaserAddress: '',
   purchaserAccount: 0,

@@ -7,7 +7,16 @@ export const formSlice = createSlice({
   initialState: formInitialState,
   reducers: {
     createInvoice: (state: FormState, action: PayloadAction<FormState>) => {
-      return { ...state, ...action.payload }
+      return {
+        ...state,
+        ...action.payload,
+        vatPercentage: action.payload.vatPercentage,
+        grossAmount: Number(action.payload.nettAmount) + Number(action.payload.nettAmount * action.payload.vatPercentage),
+        productName: action.payload.productName,
+        nettAmount: Number(action.payload.nettAmount),
+        nettSumAmount: Number(action.payload.nettAmount),
+        vatAmount: Number(action.payload.nettAmount * action.payload.vatPercentage),
+      }
     }
   }
 })

@@ -19,10 +19,11 @@ import logo from '../../public/logo.png';
 import Heading from "../../components/Heading/Heading";
 
 
-const Preview = () => {
+const Preview = (props) => {
   const data = useSelector((state: RootState) => state.invoice)
 
   return (
+    <div ref={props.reff}>
     <Document>
       <Page size="A4">
         <View>
@@ -36,6 +37,7 @@ const Preview = () => {
               <Box><Text>Miejsce wystawienia: <strong>{data.vendorCity}</strong></Text></Box>
               <Box><Text>Data wystawienia: <strong>{data.dateOfCreation} </strong></Text></Box>
               <Box><Text>Data sprzedaży / wykonania usługi: <strong> {data.dateOfIssue}</strong></Text></Box>
+              <Box><Text>Termin płatności: <strong> {data.paymentDeadline}</strong></Text></Box>
             </Grid>
           </Grid>
 
@@ -82,7 +84,7 @@ const Preview = () => {
             </Grid>
           </Grid>
 
-          <Grid container>
+          <Grid container style={{ marginTop: "20px" }}>
             <Grid item xs={12} spacing={2}>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="spanning table">
@@ -105,7 +107,7 @@ const Preview = () => {
                       <TableCell align="center">{data.productAmount}</TableCell>
                       <TableCell align="center">{data.nettAmount}</TableCell>
                       <TableCell align="center">{data.nettSumAmount}</TableCell>
-                      <TableCell align="center">{data.vatPercentage}</TableCell>
+                      <TableCell align="center">{data.vatPercentage * 100}%</TableCell>
                       <TableCell align="center">{data.vatAmount}</TableCell>
                       <TableCell align="center">{data.grossAmount}</TableCell>
                     </TableRow>
@@ -132,10 +134,10 @@ const Preview = () => {
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell align="center">{data.productName}</TableCell>
-                      <TableCell align="center">{data.productAmount}</TableCell>
-                      <TableCell align="center">{data.nettAmount}</TableCell>
+                      <TableCell align="center">{data.vatPercentage * 100}%</TableCell>
                       <TableCell align="center">{data.nettSumAmount}</TableCell>
+                      <TableCell align="center">{data.vatAmount}</TableCell>
+                      <TableCell align="center">{data.grossAmount}</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -143,9 +145,15 @@ const Preview = () => {
             </Grid>
           </Grid>
 
+          <Grid container style={{ marginTop: "30px" }}>
+            <Grid item xs={6}>
+              <Text>RAZEM: {data.grossAmount}</Text>
+            </Grid>
+          </Grid>
         </View>
       </Page>
     </Document>
+    </div>
   )
 }
 

@@ -14,10 +14,10 @@ const CompanyDetails = (props: ICompanyDetails) => {
         <h1>{isPurchaser ? "Nabywca" : "Sprzedawca"}</h1>
         {name && <Box><Text><strong>Nazwa: </strong>{name}</Text></Box>}
         {address && <Box><Text><strong>Adres: </strong>{address},{postal},{city}</Text></Box>}
-        {nip && <Box><Text><strong>NIP: </strong>{nip}</Text></Box>}
-        {phone && <Box><Text>Numer telefonu: <strong>{phone}</strong></Text></Box>}
-        {account && <Box><Text>Numer konta: <strong>{account}</strong></Text></Box>}
-        {email && <Box><Text>Adres email: <strong>{email}</strong></Text></Box>}
+        {Boolean(nip) === true && <Box><Text><strong>NIP: </strong>{nip}</Text></Box>}
+        {phone && <Box><Text><strong>Numer telefonu: </strong>{phone}</Text></Box>}
+        {Boolean(account) === true && <Box><Text><strong>Numer konta:</strong> {account}</Text></Box>}
+        {email && <Box><Text><strong>Adres email: </strong>{email}</Text></Box>}
       </Grid>
     </Grid>
   )
