@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import { Grid } from "@mui/material";
+import { IHeading } from "./IHeading";
 
-interface IHeading {
-  title: string,
-  content: string,
-}
-
-const Heading = (props: IHeading) => (
+const Heading = ({ content, title }: IHeading) => (
   <Grid container>
     <Grid item xs={12}>
-      <h1>{props.title} {props.content}</h1>
+      <h2>{title} {content}</h2>
     </Grid>
   </Grid>
 )

@@ -8,8 +8,9 @@ import { Provider } from "react-redux";
 import { store } from "../store/store";
 import Pdf from "react-to-pdf";
 import moment from "moment/moment";
+import 'moment/locale/pl'
 
-const ref = React.createRef();
+const pdfRef = React.createRef();
 
 const Home: NextPage = () => (
   <Provider store={store}>
@@ -21,14 +22,13 @@ const Home: NextPage = () => (
         <Form/>
       </Grid>
       <Grid item xs={8}>
-        <Preview reff={ref}/>
-        <Pdf targetRef={ref}
-             filename={`gmartowski-${moment().format('MMMM').toLowerCase()}-${moment().format('YYYY')}`}>
+        <Preview reference={pdfRef}/>
+        <Pdf targetRef={pdfRef}
+             filename={`gmartowski-${moment().locale("de").format('MMMM').toLowerCase()}-${moment().format('YYYY')}`}>
           {({ toPdf }) => (
             <Button variant="outlined" onClick={toPdf}>Generate Pdf</Button>
           )}
         </Pdf>
-        <div>{}</div>
       </Grid>
     </Grid>
   </Provider>
